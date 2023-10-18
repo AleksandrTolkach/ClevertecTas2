@@ -1,4 +1,5 @@
 rootProject.name = 'basic'
 include 'checker'
 include 'core'
+include 'api'
 
