@@ -4,6 +4,9 @@ import java.util.Scanner;
 
 public class StringUtils {
 
+  private StringUtils() {
+  }
+
   private static final String WRONG_SYMBOL =
       "Введено неверное значение. Необходимо ввести целое число.";
 
