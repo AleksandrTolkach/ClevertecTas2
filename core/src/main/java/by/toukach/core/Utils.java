@@ -6,11 +6,15 @@ import java.util.Arrays;
 public class Utils {
 
   private static final String WRONG_ARRAY = "Массив содержит некорректный символ - %s %n";
+  private static final String EMPTY_ARRAY = "Передан пустой массив";
 
   private Utils() {
   }
 
   public static boolean isAllPositiveNumbers(String... str) {
+    if (str == null || str.length == 0) {
+      throw new RuntimeException(EMPTY_ARRAY);
+    }
     try {
 
       return Arrays.stream(str)
@@ -21,8 +25,9 @@ public class Utils {
           .orElse(true);
 
     } catch (NumberFormatException e) {
-      System.out.printf(WRONG_ARRAY, e.getMessage());
-      throw new RuntimeException(e);
+      String errorMessage = String.format(WRONG_ARRAY, e.getMessage());
+      System.out.printf(errorMessage);
+      throw new RuntimeException(errorMessage);
     }
   }
 

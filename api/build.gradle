@@ -10,11 +10,9 @@ repositories {
 }
 
 dependencies {
-    implementation project(":checker")
+    implementation project(":core")
     testImplementation 'org.junit.jupiter:junit-jupiter-api:5.8.1'
     testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine:5.8.1'
-    testImplementation 'org.junit.jupiter:junit-jupiter-params:5.8.0'
-    testImplementation 'org.assertj:assertj-core:3.21.0'
 }
 
 test {
@@ -22,11 +20,13 @@ test {
 }
 
 jar {
+    duplicatesStrategy(DuplicatesStrategy.EXCLUDE)
     from {
         configurations.runtimeClasspath.collect { it.isDirectory() ? it : zipTree(it) }
     }
     manifest {
         attributes(
+                'Main-Class': "by.toukach.api.App",
                 'Implementation-Title': project.name,
                 'Implementation-Version': project.version
         )
