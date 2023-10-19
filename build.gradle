@@ -1,0 +1,51 @@
+plugins {
+    id 'java'
+}
+
+apply plugin: MyPlugin
+
+group 'by.toukach'
+version '1.0.1'
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    implementation project(':api')
+    testImplementation 'org.junit.jupiter:junit-jupiter-api:5.8.1'
+    testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine:5.8.1'
+}
+
+test {
+    useJUnitPlatform()
+}
+
+jar {
+    duplicatesStrategy(DuplicatesStrategy.EXCLUDE)
+    from {
+        configurations.runtimeClasspath.collect { it.isDirectory() ? it : zipTree(it) }
+    }
+    manifest {
+        attributes(
+                'Main-Class': 'by.toukach.api.App',
+                'Implementation-Title': project.name,
+                'Implementation-Version': project.version
+        )
+    }
+    finalizedBy('message')
+}
+
+class MyPlugin implements Plugin<Project> {
+    void apply(Project project) {
+        project.apply {
+            'jacoco'
+        }
+
+        project.task('message') {
+            doLast {
+                println "Plugin was successfully added."
+            }
+        }
+    }
+}
